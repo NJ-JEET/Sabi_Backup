@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('especialistas', function (Blueprint $table) {
-            $table->id('id_especialista'); // PK 
-            $table->string('cedula_prof');
-            $table->string('especialidad');
-            $table->string('consultorio');
-            // Relación "Es" con Usuario 
-            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario'); 
+            $table->id('id_especialista'); // PK
+            
+            $table->string('especialidad'); // Campo 2: Especialidad
+            $table->string('consultorio');  // Campo 3: Consultorio
+            $table->string('imagen_url');   // URL de la imagen del especialista
+            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario'); // Relación
             $table->timestamps();
         });
     }
