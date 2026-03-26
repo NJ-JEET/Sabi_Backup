@@ -6,6 +6,22 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
+//Estas rutas son exclusivamente para PRUEBAS
+
+//Route::get('/test-admin', function () {
+    auth()->login(\App\Models\User::where('rol', 'ADMIN')->first());
+    return redirect('/dashboard');
+//});
+
+//Route::get('/login-directo-sofia', function () {
+    $user = \App\Models\User::where('email', 'sofia@test.com')->first();
+    if ($user) {
+        auth()->login($user);
+        return redirect('/dashboard');
+    }
+    return "Error: No se encontró a Sofia. Verifica que la creaste en Tinker.";
+//});
+
 // Ruta principal que carga el index
 Route::get('/', [ClinicaController::class, 'index']);
 
