@@ -13,16 +13,31 @@ class EspecialistaController extends Controller
         $especialistas = Especialista::all();
         // Traemos todos los usuarios para poder ligarlos en el formulario
         $usuarios = \App\Models\Usuario::where('rol', 'ESPECIALISTA')->get(); 
-        return view('especialistas', compact('especialistas', 'usuarios'));
+        return view('especialistas.index', compact('especialistas', 'usuarios'));
     }
 
 
     // Guarda un nuevo especialista (Crear)
+// 2. Guardar un nuevo especialista en el catálogo
     public function store(Request $request)
     {
-        // El request ya trae el 'id_usuario' desde el <select> del formulario
-        Especialista::create($request->all()); 
-        return redirect()->back()->with('success', 'Especialista ligado y registrado correctamente.');
+        // Validamos usando el nombre de tu input (lo cambiaremos en el paso 3)
+        $request->validate([
+            'id_usuario' => 'required',
+            'especialidad' => 'required|string|max:255',
+            'consultorio' => 'required|string|max:50',
+            'imagen_url' => 'nullable|url' 
+        ]);
+
+        // Guardamos en la base de datos empatando con tus columnas reales
+        Especialista::create([
+            'id_usuario' => $request->id_usuario,
+            'especialidad' => $request->especialidad,
+            'consultorio' => $request->consultorio,
+            'imagen_url' => $request->imagen_url 
+        ]);
+
+        return redirect()->route('especialistas.index')->with('success', 'Especialista agregado al catálogo.');
     }
 
 

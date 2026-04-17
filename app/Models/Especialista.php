@@ -8,13 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Especialista extends Model
 {
     use HasFactory;
-    
-    protected $primaryKey = 'id_especialista';
-    protected $fillable = ['especialidad', 'consultorio', 'imagen_url', 'id_usuario'];
 
+    // 1. Apuntamos a la tabla correcta
+    protected $table = 'especialistas';
+
+    // 2. Le decimos cuál es su llave primaria real
+    protected $primaryKey = 'id_especialista';
+
+    // 3. Los campos que permitimos llenar (exactamente como en tu foto)
+    protected $fillable = [
+        'id_usuario',
+        'especialidad',
+        'consultorio',
+        'imagen_url'
+    ];
+
+    // (Opcional pero recomendado) Relación para obtener el nombre del usuario después
     public function usuario()
-{
-    // Relacionamos id_usuario de especialistas con id_usuario de usuarios
-    return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
-}
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
+    }
 }
