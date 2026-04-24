@@ -31,6 +31,14 @@
                         <div class="d-grid mt-2">
                             <button type="submit" class="btn btn-primary btn-lg">Entrar al Sistema</button>
                         </div>
+                        <div class="text-center mt-4 pt-2 border-t border-gray-100">
+                            <p class="text-sm text-gray-600">
+                                ¿Eres nuevo en Sabi? 
+                                <a href="{{ route('register') }}" class="text-indigo-600 fw-bold text-decoration-none hover:underline">
+                                    Crea tu cuenta médica aquí
+                                </a>
+                            </p>
+                        </div>
                     </form>
 
                     <div class="text-center mt-3">

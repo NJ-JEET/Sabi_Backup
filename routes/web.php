@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitaController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 
 // --- 1. RUTAS PÚBLICAS Y DE LOGIN ---
 Route::get('/', [ClinicaController::class, 'index']);
@@ -22,6 +23,10 @@ Route::post('/olvide-password', [AuthController::class, 'sendResetLink'])->name(
 
 Route::get('/restablecer-password', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/actualizar-password', [AuthController::class, 'updatePassword'])->name('password.update');
+
+// RUTAS DE REGISTRO
+Route::get('/registro', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/registro', [RegisterController::class, 'register'])->name('register.post');
 
 // --- RUTAS PROTEGIDAS ---
 Route::middleware(['auth'])->group(function () {
@@ -49,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
         Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
     });
+
 
 /*     Route::get('/probar-correo', function () {
         Mail::raw('¡Conexión SMTP con Outlook exitosa!', function ($message) {
