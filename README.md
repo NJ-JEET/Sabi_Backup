@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -62,3 +63,23 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# Plataforma Web de Gestión Médica
+Sistema integral para la optimización de citas médicas y gestión de especialistas.
+
+## Sprint 1: Autenticación y Base de Datos
+- Implementación del esquema de base de datos.
+- Módulo de registro y login para pacientes y especialistas.
+- Refactorización y migración de tablas de usuarios y pacientes.
+
+## Tecnologías Utilizadas
+* **Base de Datos:** MariaDB (XAMPP).
+* **Gestión de Proyecto:** Asana (Metodología Scrum).
+* **Documentación:** Markdown.
+
+## Equipo de Desarrollo
+* **Trino Cárdenas:** Team Leader.
+* **Paulina Vázquez:** Analista.
+* **Ellian Ortega:** Developer.
+* **Carlos Gutierrez:** Tester.
+>>>>>>> 4b6631a641fe5c8091865e27a1809074deea7631
