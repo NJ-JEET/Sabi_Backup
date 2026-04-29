@@ -22,12 +22,12 @@ class AuthController extends Controller
     {
         $request->validate([
             'correo' => 'required|email',
-            'contraseña' => 'required',
+            'password' => 'required',
         ]);
 
         $credenciales = [
             'correo' => $request->correo,
-            'password' => $request->contraseña 
+            'password' => $request->password 
         ];
 
         if (Auth::attempt($credenciales)) {
@@ -101,7 +101,7 @@ class AuthController extends Controller
 
         if ($usuario) {
             // Actualizar y cifrar la nueva contraseña
-            $usuario->contraseña = Hash::make($request->password);
+            $usuario->password = Hash::make($request->password);
             $usuario->save();
 
             // --- NUEVAS MODIFICACIONES ---

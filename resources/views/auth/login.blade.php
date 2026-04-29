@@ -24,8 +24,8 @@
                         </div>
                         
                         <div class="mb-4">
-                            <label for="contraseña" class="form-label fw-bold">Contraseña</label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="********" required>
+                            <label for="password" class="form-label fw-bold">[Contraseña]</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
                         </div>
                         
                         <div class="d-grid mt-2">
