@@ -78,7 +78,7 @@ CREATE TABLE `especialistas` (
 --
 
 INSERT INTO `especialistas` (`id_especialista`, `especialidad`, `consultorio`, `imagen_url`, `id_usuario`, `created_at`, `updated_at`) VALUES
-(1, 'Cardiologia', 'A-312', 'https://www.elcomercio.com/tendencias/entretenimiento/quien-es-tia-paola/', 61, '2026-03-27 10:40:24', '2026-03-27 10:40:24');
+(1, 'Cardiología', 'A-312', 'https://ui-avatars.com/api/?name=Jocelyn+Lomeli&background=0D8ABC&color=fff', 61, '2026-03-27 10:40:24', '2026-03-27 10:40:24');
 
 -- --------------------------------------------------------
 
@@ -183,8 +183,7 @@ CREATE TABLE `password_resets` (
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NU
-  LL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
