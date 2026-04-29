@@ -212,6 +212,7 @@ CREATE TABLE `usuarios` (
   `idioma` varchar(255) DEFAULT NULL,
   `zona_horaria` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
