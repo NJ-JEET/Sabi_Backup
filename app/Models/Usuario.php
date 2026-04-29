@@ -22,7 +22,7 @@ class Usuario extends Authenticatable
         'nombre', 
         'rol', 
         'correo',    
-        'contraseña',
+        'password',
         'country_code',   
         'phone_prefix',   
         'telefono',       

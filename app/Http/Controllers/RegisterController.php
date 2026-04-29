@@ -26,7 +26,7 @@ class RegisterController extends Controller
         Usuario::create([
             'nombre' => $request->nombre,
             'correo' => $request->email, // Guardamos el valor del input 'email' en la columna 'correo'
-            'contraseña' => Hash::make($request->password), // En la columna 'contraseña'
+            'password' => Hash::make($request->password), // En la columna 'contraseña'
             'country_code' => $request->country_code,
             'phone_prefix' => $request->phone_prefix,
             'telefono' => $request->telefono,
