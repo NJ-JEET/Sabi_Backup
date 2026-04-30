@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('rol');
             $table->string('correo')->unique();
-            $table->string('contraseña');
+            $table->string('password');
+            $table->string('country_code') ->nullable(); 
             $table->timestamps();
         });
     }

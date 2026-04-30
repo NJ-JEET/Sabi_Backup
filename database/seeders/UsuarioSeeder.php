@@ -20,7 +20,13 @@ class UsuarioSeeder extends Seeder
             'nombre' => 'Paulina Vazquez',
             'rol' => 'Administrador',
             'correo' => 'paulina.vaz@gestionmedica.com',
-            'contraseña' => Hash::make('pAU23li8n2'),
+            'password' => Hash::make('pAU23li8n2'),
+            'country_code' => 'MX',
+            'phone_prefix' => '+52',
+            'telefono' => '3312345678',
+            'idioma' => 'es',
+            'zona_horaria' => 'America/Mexico_City',
+                 
         ]);
 
         // Registro 2: Especialista
@@ -28,7 +34,12 @@ class UsuarioSeeder extends Seeder
             'nombre' => 'Jocelyn Lomeli',
             'rol' => 'Especialista',
             'correo' => 'joce.Lo@gestionmedica.com',
-            'contraseña' => Hash::make('fisio123'),
+            'password' => Hash::make('fisio123'),
+            'country_code' => 'MX',
+            'phone_prefix' => '+52',
+            'telefono' => '3387654321',
+            'idioma' => 'es',
+            'zona_horaria' => 'America/Mexico_City',
         ]);
 
         // Registro 3: Paciente
@@ -36,7 +47,12 @@ class UsuarioSeeder extends Seeder
             'nombre' => 'Laura Garcia',
             'rol' => 'Paciente',
             'correo' => 'laura.garcia@gmail.com',
-            'contraseña' => Hash::make('lau32344ra'),
+            'password' => Hash::make('lau32344ra'),
+            'country_code' => 'MX',
+            'phone_prefix' => '+52',
+            'telefono' => '3300001122',
+            'idioma' => 'es',
+            'zona_horaria' => 'America/Mexico_City',
         ]);
     }
 }

@@ -24,7 +24,7 @@
                         </div>
                         
                         <div class="mb-4">
-                            <label for="password" class="form-label fw-bold">[Contraseña]</label>
+                            <label for="password" class="form-label fw-bold">Contraseña</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
                         </div>
                         
