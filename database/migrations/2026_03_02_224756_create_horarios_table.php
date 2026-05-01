@@ -19,7 +19,7 @@ return new class extends Migration
             $table->time('hora_inicio');
             $table->time('hora_fin');
             // Relación "Define" con Especialista
-            $table->foreignId('id_especialista')->constrained('especialistas', 'id_especialista');
+            $table->foreignId('id_especialista')->constrained('especialistas', 'id_especialista')->onDelete('cascade');
             $table->timestamps();
         });
     }

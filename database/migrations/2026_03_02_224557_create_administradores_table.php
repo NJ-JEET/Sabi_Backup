@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('fecha_asig');
             $table->string('departamento');
             // Relación "Es" con Usuario
-            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario');
+            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administradors');
+        Schema::dropIfExists('administradores');
     }
 };

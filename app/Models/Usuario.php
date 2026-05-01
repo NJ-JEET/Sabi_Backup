@@ -39,4 +39,25 @@ class Usuario extends Authenticatable
     {
         return 'correo';
     }
+
+        public function administrador()
+    {
+        return $this->hasOne(Administrador::class, 'id_usuario');
+    }
+
+    /**
+     * Relación 1:1 con Paciente
+     */
+    public function paciente()
+    {
+        return $this->hasOne(Paciente::class, 'id_usuario');
+    }
+
+    /**
+     * Relación 1:1 con Especialista
+     */
+    public function especialista()
+    {
+        return $this->hasOne(Especialista::class, 'id_usuario');
+    }
 }

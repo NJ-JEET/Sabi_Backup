@@ -18,8 +18,8 @@ return new class extends Migration
             
             $table->string('especialidad'); // Campo 2: Especialidad
             $table->string('consultorio');  // Campo 3: Consultorio
-            $table->string('imagen_url');   // URL de la imagen del especialista
-            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario'); // Relación
+            $table->string('imagen_url')->nullable();   // URL de la imagen del especialista
+            $table->foreignId('id_usuario')->constrained('usuarios', 'id_usuario')->onDelete('cascade'); // Relación
             $table->timestamps();
         });
     }
