@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::resource('citas', CitaController::class);
+    Route::get('/citas/{id}/completar', [CitaController::class, 'completar'])->name('citas.completar');
+    Route::get('/citas/{id}/cancelar', [CitaController::class, 'cancelar'])->name('citas.cancelar');
 
     // AQUÍ ESTÁ EL CAMBIO:
     // Creamos un grupo donde AMBOS (Admin y Especialista) pueden entrar

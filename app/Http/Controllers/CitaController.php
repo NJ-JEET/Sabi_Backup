@@ -16,7 +16,8 @@ class CitaController extends Controller
 
         if ($rol == 'Paciente') {
             // CAMBIO AQUÍ: Cambia 'id_usuario' por 'id_paciente'
-            $citas = Cita::where('id_paciente', Auth::user()->id_usuario)->get();
+            $idPacienteReal = Auth::user()->paciente->id_paciente; // Obtenemos el ID del paciente logueado
+            $citas = Cita::where('id_paciente', $idPacienteReal)->get();
         } else {
             // Admin y Especialista ven todo
             $citas = Cita::with(['paciente', 'especialista.usuario'])->get();
@@ -38,17 +39,32 @@ class CitaController extends Controller
             'id_especialista' => 'required',
             'fecha' => 'required|date',
             'hora' => 'required',
+            'motivo' => 'required|string|max:255',
         ]);
 
+        $horaFormateada = date('H:i:00', strtotime($request->hora));
+
+        $existeCita = Cita::where('id_especialista', $request->id_especialista)
+            ->where('fecha', $request->fecha)
+            ->where('hora', $horaFormateada)
+            ->where('estado','!=', 'Cancelada')
+            ->exists();
+        
+        if ($existeCita) {
+            return back()->withInput()->withErrors(['error' => 'Ya existe una cita para ese especialista en la fecha y hora seleccionadas. Por favor, elige otro horario.']);
+        }
+        
         // 1. Guardamos la cita en una variable ($cita) para poder usar sus datos después
         $cita = Cita::create([
-            'id_paciente' => Auth::user()->id_usuario, 
+            'id_paciente' => Auth::user()->paciente->id_paciente, // Usamos el ID del paciente logueado
             'id_especialista' => $request->id_especialista,
             'fecha' => $request->fecha,
             'hora' => $request->hora,
-            'estado' => 'Pendiente'
+            'estado' => 'Pendiente',
+            'motivo' => $request->motivo,
         ]);
 
+    
         // 2. Enviamos el correo (esto debe ir ANTES del redirect)
         // Usamos Auth::user()->email para que le llegue al paciente real
         Mail::raw("Hola " . Auth::user()->nombre . ", tu cita ha sido programada exitosamente para el día {$cita->fecha} a las {$cita->hora}.", function ($message) {
@@ -75,15 +91,50 @@ class CitaController extends Controller
             'id_especialista' => 'required',
             'fecha' => 'required|date',
             'hora' => 'required',
+            'motivo' => 'required|string|max:255',
         ]);
 
+        // 1. Normalizamos la hora para comparar con el formato de la DB (HH:MM:00)
+        $horaFormateada = date('H:i:00', strtotime($request->hora));
+
+        // 2. Buscamos choques, ignorando la cita actual y las canceladas
+        $existeCita = Cita::where('id_especialista', $request->id_especialista)
+            ->where('fecha', $request->fecha)
+            ->where('hora', $horaFormateada) // <-- Usamos la hora normalizada
+            ->where('estado', '!=', 'Cancelada')
+            ->where('id_cita', '!=', $id) 
+            ->exists();
+
+        // 3. Solo si existe un choque, regresamos con error
+        if ($existeCita) {
+            return back()
+                ->withInput()
+                ->withErrors(['error' => 'No se puede modificar: ese horario ya está ocupado por otra cita activa.']);
+        }
+
+        // 4. Si todo está bien, actualizamos
         $cita = Cita::findOrFail($id);
         $cita->update([
             'id_especialista' => $request->id_especialista,
             'fecha' => $request->fecha,
             'hora' => $request->hora,
+            'motivo' => $request->motivo,
         ]);
 
         return redirect()->route('citas.index')->with('success', 'La cita se ha modificado correctamente.');
+    }
+
+    public function completar($id)
+    {
+        $cita = Cita::findOrFail($id);
+        $cita->update(['estado' => 'Completada']);
+        return redirect()->route('citas.index')->with('success', 'La consulta se ha marcado como completada.');
+    }
+
+    public function cancelar($id)
+    {
+        $cita = Cita::findOrFail($id);
+        $cita->update(['estado' => 'Cancelada']);
+        return redirect()->route('citas.index')->with('success', 'La cita se ha cancelado correctamente.');
     }
 }

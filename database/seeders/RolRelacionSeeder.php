@@ -35,5 +35,18 @@ class RolRelacionSeeder extends Seeder
                 'nivel_acceso' => 'General',
             ]);
         }
+        
+        $usuarioEspecialistas = Usuario::where('rol', 'Especialista')
+            ->whereDoesntHave('especialista')
+            ->get();
+
+        foreach ($usuarioEspecialistas as $u) {
+            \App\Models\Especialista::create([
+                'id_usuario' => $u->id_usuario,
+                'especialidad' => 'Medicina General',
+                'consultorio' => 'Consultorio Provisional',
+                'imagen_url' => 'https://via.placeholder.com/150',
+            ]);
+        }
     }
 }

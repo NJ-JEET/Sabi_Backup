@@ -9,6 +9,11 @@
         @endif
     </div>
 
+    {{-- Errores de validación generales --}}
+    @if($errors->has('error'))
+        <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+    @endif
+
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -41,23 +46,51 @@
                                 <small class="text-muted">{{ $c->hora }}</small>
                             </td>
                             @if(auth()->user()->rol != 'Paciente')
-                                <td>{{ $c->paciente->nombre ?? 'Paciente no encontrado' }}</td>
+                                <td>{{ $c->paciente->usuario->nombre ?? 'Paciente no encontrado' }}</td>
                             @endif
                             <td>{{ $c->especialista?->usuario?->nombre ?? 'Sin médico asignado' }}</td>
                             <td>{{ $c->especialista?->consultorio ?? 'N/A' }}</td>
                             <td>{{ Str::limit($c->motivo, 30) }}</td>
                             <td>
-                                <span class="badge {{ $c->estado == 'Pendiente' ? 'bg-warning text-dark' : 'bg-success' }}">
+                                @php
+                                    $badgeColor = match($c->estado) {
+                                        'Pendiente' => 'bg-warning text-dark',
+                                        'Completada' => 'bg-success',
+                                        'Cancelada' => 'bg-danger',
+                                        default => 'bg-secondary'
+                                    };
+                                @endphp
+                                <span class="badge {{ $badgeColor }}">
                                     {{ $c->estado }}
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('citas.edit', $c->id_cita) }}" class="btn btn-sm btn-warning fw-bold">Modificar</a>
+                                <div class="btn-group">
+                                    @if($c->estado == 'Pendiente')
+                                        <a href="{{ route('citas.edit', $c->id_cita) }}" class="btn btn-sm btn-warning fw-bold">Modificar</a>
+                                        
+                                        {{-- FORMULARIO PARA CANCELAR --}}
+                                        <form action="{{ route('citas.cancelar', $c->id_cita) }}" method="GET" style="display:inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Seguro que deseas cancelar?')">Cancelar</button>
+                                        </form>
+
+                                        {{-- FORMULARIO PARA COMPLETAR (Solo Especialista/Admin) --}}
+                                        @if(auth()->user()->rol != 'Paciente')
+                                            <form action="{{ route('citas.completar', $c->id_cita) }}" method="GET" style="display:inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success">Completar</button>
+                                            </form>
+                                        @endif
+                                    @else
+                                        <small class="text-muted italic">Finalizada</small>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">No hay citas registradas en este momento.</td>
+                            <td colspan="7" class="text-center py-4 text-muted">No hay citas registradas.</td>
                         </tr>
                         @endforelse
                     </tbody>

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id('id_cita'); // PK 
             $table->date('fecha');
             $table->time('hora');
+            $table->string('motivo');
             $table->string('estado')->default('pendiente');
-            // FKs de Paciente y Especialista 
             $table->foreignId('id_paciente')->constrained('pacientes', 'id_paciente')->onDelete('cascade');
             $table->foreignId('id_especialista')->constrained('especialistas', 'id_especialista')->onDelete('cascade');
             $table->timestamps();

@@ -17,13 +17,14 @@ class Cita extends Model
         'id_especialista',
         'fecha',
         'hora',
+        'motivo',
         'estado'           // Pendiente, Completada, Cancelada
     ];
 
     // Relación: Una cita pertenece a un Paciente (Usuario)
     public function paciente()
     {
-        return $this->belongsTo(Usuario::class, 'id_paciente', 'id_usuario');
+        return $this->belongsTo(Paciente::class, 'id_paciente', 'id_paciente');
     }
 
     // Relación: Una cita pertenece a un Especialista

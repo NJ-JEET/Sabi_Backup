@@ -59,5 +59,7 @@ class DatabaseSeeder extends Seeder
                 'historial' => 'Historial generado por Factory.'
             ]);
         }
+
+        $this->call(RolRelacionSeeder::class);
     }
 }
